@@ -237,7 +237,7 @@ The payload is a JSON-safe version of the Delta Chat event object.
 
 ## Bruno Collection
 
-The repository includes a Bruno collection in [`Bruno Requests`](Bruno%20Requests) for testing the API manually.
+The repository includes a Bruno (https://www.usebruno.com/) collection in [`Bruno Requests`](Bruno%20Requests) for testing the API manually.
 
 At minimum, set your `API_KEY` in the Bruno environment before sending requests.
 
