@@ -20,22 +20,12 @@ def load_env(env_path: str = ".env") -> None:
 
 load_env()
 
-WEBHOOK_URL = os.environ.get(
-    "WEBHOOK_URL"
-)
+BOT_CLI_NAME = os.environ.get("BOT_CLI_NAME","REST_API_Relay")
+LOG_LEVEL = os.environ.get("LOG_LEVEL","info").lower()
 
-API_PORT = os.environ.get(
-    "API_PORT",
-    "8000"
-)
+ENABLE_WEBHOOK = os.environ.get("ENABLE_WEBHOOK", "false").lower() in ("1", "true", "yes")
+WEBHOOK_URL = os.environ.get("WEBHOOK_URL")
 
-
-API_HOST = os.environ.get(
-    "API_HOST",
-    "127.0.0.1"
-)
-
-
-API_KEY = os.environ.get(
-    "API_KEY"
-)
+API_PORT = os.environ.get("API_PORT","8000")
+API_HOST = os.environ.get("API_HOST","127.0.0.1")
+API_KEY = os.environ.get("API_KEY")
