@@ -30,6 +30,7 @@ def echo(bot, accid, event):
             args=(bot, WEBHOOK_URL, kind, event),
             daemon=True,
         ).start()
+    bot.logger.info("Message #%i received from %s (chat #%i): %s", event.msg.id, event.msg.sender.address, event.msg.chat_id, event.msg.text)
     bot.logger.debug("Message payload: %r", event)
     bot.rpc.markseen_msgs(accid, [event.msg.id])
 

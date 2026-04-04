@@ -1,7 +1,7 @@
 info:
-  name: Get All Account Ids
+  name: Get All Accounts
   type: http
-  seq: 3
+  seq: 5
 
 http:
   method: POST
@@ -10,7 +10,7 @@ http:
     type: json
     data: |-
       {
-        "method": "get_all_account_ids",
+        "method": "get_all_accounts",
         "params": []
       }
   auth: inherit
@@ -53,7 +53,7 @@ examples:
         type: json
         data: |-
           {
-            "method": "get_all_account_ids",
+            "method": "get_all_accounts",
             "params": []
           }
     response:
@@ -63,24 +63,36 @@ examples:
         - name: server
           value: BaseHTTP/0.6 Python/3.13.7
         - name: date
-          value: Sat, 04 Apr 2026 20:55:13 GMT
+          value: Sat, 04 Apr 2026 23:29:32 GMT
         - name: content-type
           value: application/json; charset=utf-8
         - name: content-length
-          value: "62"
+          value: "226"
       body:
         type: json
         data: |-
           {
-            "method": "get_all_account_ids",
+            "method": "get_all_accounts",
             "params": [],
             "result": [
-              1
+              {
+                "addr": "*********@nine.testrun.org",
+                "color": "#00857d",
+                "display_name": "My Rest API Bot",
+                "id": 2,
+                "kind": "Configured",
+                "private_tag": null,
+                "profile_image": null
+              }
             ]
           }
 
 docs: |-
-  getAllAccountIds
-  getAllAccountIds(): Promise<number[]>
-  Returns Promise<number[]>
-  Defined in generated/client.ts:79
+  getAllAccounts
+  getAllAccounts(): Promise<Account[]>
+  Get a list of all configured accounts.
+
+  Returns Promise<Account[]>
+  Defined in generated/client.ts:110
+
+  https://js.jsonrpc.delta.chat/classes/RawClient.html#getallaccounts

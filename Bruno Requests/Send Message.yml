@@ -12,7 +12,7 @@ http:
       {
         "method": "send_msg",
         "params": [
-          1,
+          {{AccountId}},
           10,
           {
             "text": "hello from rpc"
@@ -94,3 +94,15 @@ examples:
             ],
             "result": 64
           }
+
+docs: |-
+  sendMsg(accountId: number, chatId: number, data: MessageData): Promise<number>
+  Parameters
+  accountId: number
+  chatId: number
+  data: MessageData
+  Returns Promise<number>
+  Defined in generated/client.ts:1593
+
+
+  https://js.jsonrpc.delta.chat/classes/RawClient.html#sendmsg

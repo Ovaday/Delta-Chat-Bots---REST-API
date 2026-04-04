@@ -254,6 +254,7 @@ Delta Chat RPC documentation is still limited. These references were useful whil
 
 - Delta Chat bots quickstart: https://bots.delta.chat/quickstart.html
 - Delta Chat JSON-RPC source reference: https://github.com/chatmail/core/blob/main/deltachat-jsonrpc/src/api.rs#L742
+- Additional JSON-RPC Automatically Generated Docu for nodeJS (really helpful one): https://js.jsonrpc.delta.chat/classes/RawClient.html
 
 If you need to figure out a request shape, another practical option is searching installed packages for similar RPC usage patterns.
 

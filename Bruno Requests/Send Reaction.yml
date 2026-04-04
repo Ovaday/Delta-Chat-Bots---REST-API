@@ -1,7 +1,7 @@
 info:
-  name: Get All Account Ids
+  name: Send Reaction
   type: http
-  seq: 3
+  seq: 6
 
 http:
   method: POST
@@ -10,8 +10,12 @@ http:
     type: json
     data: |-
       {
-        "method": "get_all_account_ids",
-        "params": []
+        "method": "send_reaction",
+        "params": [
+          {{AccountId}},
+          17,
+          ["👍"]
+        ]
       }
   auth: inherit
 
@@ -53,8 +57,12 @@ examples:
         type: json
         data: |-
           {
-            "method": "get_all_account_ids",
-            "params": []
+            "method": "send_reaction",
+            "params": [
+              {{AccountId}},
+              17,
+              ["👍"]
+            ]
           }
     response:
       status: 200
@@ -63,24 +71,42 @@ examples:
         - name: server
           value: BaseHTTP/0.6 Python/3.13.7
         - name: date
-          value: Sat, 04 Apr 2026 20:55:13 GMT
+          value: Sat, 04 Apr 2026 23:39:22 GMT
         - name: content-type
           value: application/json; charset=utf-8
         - name: content-length
-          value: "62"
+          value: "78"
       body:
         type: json
         data: |-
           {
-            "method": "get_all_account_ids",
-            "params": [],
-            "result": [
-              1
-            ]
+            "method": "send_reaction",
+            "params": [
+              2,
+              17,
+              [
+                "👍"
+              ]
+            ],
+            "result": 19
           }
 
 docs: |-
-  getAllAccountIds
-  getAllAccountIds(): Promise<number[]>
-  Returns Promise<number[]>
-  Defined in generated/client.ts:79
+  sendReaction(
+      accountId: number,
+      messageId: number,
+      reaction: string[],
+  ): Promise<number>
+  Send a reaction to message.
+
+  Reaction is a string of emojis separated by spaces. Reaction to a single message can be sent multiple times. The last reaction received overrides all previously received reactions. It is possible to remove all reactions by sending an empty string.
+
+  Parameters
+  accountId: number
+  messageId: number
+  reaction: string[]
+  Returns Promise<number>
+  Defined in generated/client.ts:1581
+
+
+  https://js.jsonrpc.delta.chat/classes/RawClient.html#sendreaction

@@ -1,0 +1,167 @@
+info:
+  name: Get Message
+  type: http
+  seq: 8
+
+http:
+  method: POST
+  url: http://{{BaseURL}}:{{BasePort}}/rpc
+  body:
+    type: json
+    data: |-
+      {
+        "method": "get_message",
+        "params": [
+          {{AccountId}},
+          17
+        ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: Example Unauthorized
+    request:
+      url: http://{{BaseURL}}:{{BasePort}}/health
+      method: GET
+    response:
+      status: 401
+      statusText: Unauthorized
+      headers:
+        - name: server
+          value: BaseHTTP/0.6 Python/3.13.7
+        - name: date
+          value: Sat, 04 Apr 2026 20:45:21 GMT
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "65"
+      body:
+        type: json
+        data: |-
+          {
+            "error": "unauthorized",
+            "detail": "missing or invalid API key"
+          }
+  - name: Example Success
+    request:
+      url: http://{{BaseURL}}:{{BasePort}}/rpc
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "method": "get_message",
+            "params": [
+              {{AccountId}},
+              17
+            ]
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: server
+          value: BaseHTTP/0.6 Python/3.13.7
+        - name: date
+          value: Sat, 04 Apr 2026 23:46:41 GMT
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "1547"
+      body:
+        type: json
+        data: |-
+          {
+            "method": "get_message",
+            "params": [
+              2,
+              17
+            ],
+            "result": {
+              "chat_id": 10,
+              "dimensions_height": 0,
+              "dimensions_width": 0,
+              "download_state": "Done",
+              "duration": 0,
+              "error": null,
+              "file": null,
+              "file_bytes": 0,
+              "file_mime": null,
+              "file_name": null,
+              "from_id": 11,
+              "has_deviating_timestamp": false,
+              "has_html": false,
+              "has_location": false,
+              "id": 17,
+              "info_contact_id": null,
+              "is_bot": false,
+              "is_edited": false,
+              "is_forwarded": false,
+              "is_info": false,
+              "original_msg_id": null,
+              "override_sender_name": null,
+              "parent_id": 16,
+              "quote": null,
+              "reactions": {
+                "reactions": [
+                  {
+                    "count": 1,
+                    "emoji": "👍",
+                    "is_from_self": true
+                  }
+                ],
+                "reactions_by_contact": {
+                  "1": [
+                    "👍"
+                  ]
+                }
+              },
+              "received_timestamp": 1775345902,
+              "saved_message_id": null,
+              "sender": {
+                "address": "*********@nine.testrun.org",
+                "auth_name": "Evgenii",
+                "color": "#008000",
+                "display_name": "Evgenii",
+                "e2ee_avail": true,
+                "id": 11,
+                "is_blocked": false,
+                "is_bot": false,
+                "is_key_contact": true,
+                "is_verified": true,
+                "last_seen": 1775345938,
+                "name": "",
+                "name_and_addr": "Evgenii (********@nine.testrun.org)",
+                "profile_image": "****************************************",
+                "status": "",
+                "verifier_id": 1,
+                "was_seen_recently": true
+              },
+              "show_padlock": true,
+              "sort_timestamp": 1775345902,
+              "state": 16,
+              "subject": "Message from Evgenii",
+              "system_message_type": "Unknown",
+              "text": "test",
+              "timestamp": 1775345902,
+              "vcard_contact": null,
+              "view_type": "Text",
+              "webxdc_href": null
+            }
+          }
+
+docs: |-
+  getMessage(accountId: number, msgId: number): Promise<T.Message>
+  Parameters
+  accountId: number
+  msgId: number
+  Returns Promise<T.Message>
+  Defined in generated/client.ts:990
+
+  https://js.jsonrpc.delta.chat/classes/RawClient.html#getmessage
