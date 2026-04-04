@@ -59,6 +59,7 @@ Windows:
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
+Notes: Depending of the system, there might be back or forward slashes.
 
 Linux:
 
