@@ -1,0 +1,62 @@
+info:
+  name: Health Check
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: http://{{BaseURL}}:{{BasePort}}/health
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: Example Success
+    request:
+      url: http://{{BaseURL}}:{{BasePort}}/health
+      method: GET
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: server
+          value: BaseHTTP/0.6 Python/3.13.7
+        - name: date
+          value: Sat, 04 Apr 2026 20:44:35 GMT
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "16"
+      body:
+        type: json
+        data: |-
+          {
+            "status": "ok"
+          }
+  - name: Example Unauthorized
+    request:
+      url: http://{{BaseURL}}:{{BasePort}}/health
+      method: GET
+    response:
+      status: 401
+      statusText: Unauthorized
+      headers:
+        - name: server
+          value: BaseHTTP/0.6 Python/3.13.7
+        - name: date
+          value: Sat, 04 Apr 2026 20:45:21 GMT
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "65"
+      body:
+        type: json
+        data: |-
+          {
+            "error": "unauthorized",
+            "detail": "missing or invalid API key"
+          }

@@ -1,0 +1,8 @@
+name: Environment
+variables:
+  - name: BaseURL
+    value: 127.0.0.1
+  - name: BasePort
+    value: "8080"
+  - secret: true
+    name: APIKey
