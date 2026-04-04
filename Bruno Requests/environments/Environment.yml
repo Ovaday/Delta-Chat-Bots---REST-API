@@ -3,6 +3,6 @@ variables:
   - name: BaseURL
     value: 127.0.0.1
   - name: BasePort
-    value: "8080"
+    value: "8000"
   - secret: true
     name: APIKey
