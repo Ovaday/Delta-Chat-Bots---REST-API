@@ -55,6 +55,8 @@ Note: if you have multiple bots, you need to run:
 python ./main.py -a 1 config displayname "My Rest API Bot"
 ```
 Where -a 1 is an account + an account id (from ```python ./main.py list```)
+
+P.S. https://nine.testrun.org/new - test relay, you might want to use another Delta Chat relay. For me this one works fine.
 ### Get Invitation Link
 ```
 python ./main.py link
@@ -87,7 +89,44 @@ Use connection url from setup (sub-step 4 - Get Invitation Link)
 When you send messages to the bot, it will change status of messages:
 ![First start - message read](image.png)
 
-In the background it will send new messages to your desired REST-API Endpoint. (logs will be in python run logs)
+In the background it will send new messages to your desired REST-API Endpoint (logs will be in python run logs).
+
+## Doing API Requests
+Feel free to start with Bruno collection template that I have created for that. You need to specify Environment Variables to start, at least set your API_KEY.
+### Health Status Check
+When instance runs, you shall be able to get the health status:
+```
+curl --request GET \
+  --url http://127.0.0.1:8000/health \
+  --header 'authorization: Bearer supersecretkey'
+```
+### Send message via API
+
+You can send a message via call to RPC like that:
+```
+curl --request POST \
+  --url http://127.0.0.1:8000/rpc \
+  --header 'authorization: Bearer supersecretkey' \
+  --header 'content-type: application/json' \
+  --data '{
+  "method": "send_msg",
+  "params": [
+    1,
+    10,
+    {
+      "text": "hello from rpc"
+    }
+  ]
+}'
+```
+
+In this request:
+method: send_msg - RPC Method that we will be using
+params 1 - Local Bot Account ID (you can get it from Bruno 'Get All Account Ids' or run ```python ./main.py list```)
+params 2 - Target Chat ID. You can get it from logs, NewMsgEvent -> msg -> chat_id
+JSON Object after it - Message that will be sent.
+
+Apart from that - good luck and god help you with funding what have to be in the request. At the moment of writing there is no docu for that.
 
 ## Hints:
 
