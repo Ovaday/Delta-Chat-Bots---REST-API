@@ -56,7 +56,7 @@ examples:
         type: json
         data: |-
           {
-            "method": "get_basic_chat_info",
+            "method": "get_chat_securejoin_qr_code",
             "params": [
               {{AccountId}},
               11
@@ -69,53 +69,36 @@ examples:
         - name: server
           value: BaseHTTP/0.6 Python/3.11.2
         - name: date
-          value: Sun, 05 Apr 2026 11:10:55 GMT
+          value: Sun, 05 Apr 2026 11:14:14 GMT
         - name: content-type
           value: application/json; charset=utf-8
         - name: content-length
-          value: "350"
+          value: "288"
       body:
         type: json
         data: |-
           {
-            "method": "get_basic_chat_info",
+            "method": "get_chat_securejoin_qr_code",
             "params": [
               1,
               11
             ],
-            "result": {
-              "archived": false,
-              "chat_type": "OutBroadcast",
-              "color": "#194fe3",
-              "id": 11,
-              "is_contact_request": false,
-              "is_device_chat": false,
-              "is_encrypted": true,
-              "is_muted": false,
-              "is_self_talk": false,
-              "is_unpromoted": false,
-              "name": "Test Broadcast",
-              "pinned": false,
-              "profile_image": null
-            }
+            "result": "****************************************************************"
           }
 
 docs: |-
-  createBroadcast(accountId: number, chatName: string): Promise<number>
-  Create a new, outgoing broadcast channel (called "Channel" in the UI).
+  getChatSecurejoinQrCode(
+      accountId: number,
+      chatId: number | null,
+  ): Promise<string>
+  Get QR code text that will offer a SecureJoin invitation.
 
-  Broadcast channels are similar to groups on the sending device, however, recipients get the messages in a read-only chat and will not see who the other members are.
-
-  Called broadcast here rather than channel, because the word "channel" already appears a lot in the code, which would make it hard to grep for it.
-
-  After creation, the chat contains no recipients and is in unpromoted state; see [CommandApi::create_group_chat] for more information on the unpromoted state.
-
-  Returns the created chat's id.
+  If chat_id is a group chat ID, SecureJoin QR code for the group is returned. If chat_id is unset, setup contact QR code is returned.
 
   Parameters
   accountId: number
-  chatName: string
-  Returns Promise<number>
-  Defined in generated/client.ts:764
+  chatId: number | null
+  Returns Promise<string>
+  Defined in generated/client.ts:574
 
-  https://js.jsonrpc.delta.chat/classes/RawClient.html#createbroadcast
+  https://js.jsonrpc.delta.chat/classes/RawClient.html#getchatsecurejoinqrcode
