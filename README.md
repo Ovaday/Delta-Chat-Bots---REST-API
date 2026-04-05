@@ -33,6 +33,7 @@ LOG_LEVEL=info
 
 ENABLE_WEBHOOK=false
 WEBHOOK_URL=https://webhook.site/your-webhook-url
+WEBHOOK_AUTH_TOKEN=supersecrettoken
 
 API_PORT=8000
 API_HOST=127.0.0.1
@@ -45,6 +46,7 @@ API_KEY=supersecretkey
 - `LOG_LEVEL`: optional, defaults to `info`
 - `ENABLE_WEBHOOK`: optional, set to `true` to send webhook events
 - `WEBHOOK_URL`: required if `ENABLE_WEBHOOK=true`
+- `WEBHOOK_AUTH_TOKEN`: optional, set if you want this to be included as a Bearer Token in Authorization header of an outbound request
 - `API_HOST`: optional, defaults to `127.0.0.1`
 - `API_PORT`: optional, defaults to `8000`
 - `API_KEY`: required, used for REST API authentication
@@ -241,6 +243,39 @@ The payload is a JSON-safe version of the Delta Chat event object.
 The repository includes a Bruno (https://www.usebruno.com/) collection in [`Bruno Requests`](Bruno%20Requests) for testing the API manually.
 
 At minimum, set your `API_KEY` in the Bruno environment before sending requests.
+
+## Long-Run as systemd (on Linux) -- not tested yet
+Create a service file:
+```
+sudo nano /etc/systemd/system/DeltaChatBotsRestAPI.service
+```
+Paste:
+```
+[Unit]
+Description=DELTA-CHAT-BOTS---REST-API
+After=network.target
+
+[Service]
+User=your_user
+WorkingDirectory=/path/to/DELTA-CHAT-BOTS---REST-API
+ExecStart=/path/to/project/venv/bin/python main.py serve
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+Then:
+```
+sudo systemctl daemon-reexec
+sudo systemctl daemon-reload
+sudo systemctl enable DeltaChatBotsRestAPI
+sudo systemctl start DeltaChatBotsRestAPI
+```
+
+Check logs:
+```
+journalctl -u mybot -f
+```
 
 ## Troubleshooting
 

@@ -25,6 +25,7 @@ LOG_LEVEL = os.environ.get("LOG_LEVEL","info").lower()
 
 ENABLE_WEBHOOK = os.environ.get("ENABLE_WEBHOOK", "false").lower() in ("1", "true", "yes")
 WEBHOOK_URL = os.environ.get("WEBHOOK_URL")
+WEBHOOK_AUTH_TOKEN = os.environ.get("WEBHOOK_AUTH_TOKEN")
 
 API_PORT = os.environ.get("API_PORT","8000")
 API_HOST = os.environ.get("API_HOST","127.0.0.1")
