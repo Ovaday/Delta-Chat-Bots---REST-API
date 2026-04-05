@@ -230,6 +230,7 @@ If webhook forwarding is enabled, incoming messages are sent as:
 ```json
 {
   "type": "NewMessage",
+  "account_id": 1,
   "payload": {
     "...": "event data"
   }

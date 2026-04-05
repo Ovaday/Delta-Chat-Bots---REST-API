@@ -27,7 +27,7 @@ def echo(bot, accid, event):
     if ENABLE_WEBHOOK and WEBHOOK_URL:
         threading.Thread(
             target=post_new_message_webhook,
-            args=(bot, WEBHOOK_URL, kind, event),
+            args=(bot, accid, WEBHOOK_URL, kind, event),
             daemon=True,
         ).start()
     bot.logger.info("Message #%i received from %s (chat #%i): %s", event.msg.id, event.msg.sender.address, event.msg.chat_id, event.msg.text)
@@ -38,7 +38,7 @@ def echo(bot, accid, event):
 def log_raw_event(bot, accid, event):
     kind = getattr(event, "kind", type(event).__name__)
     bot.logger.info("Raw event on account %i: %s", accid, kind)
-    #bot.logger.debug("Raw event payload: %r", event) # Uncomment this line to log the full payload of all raw events, but be aware that this can create a lot of log output.
+    bot.logger.info("Raw event payload: %r", event) # Uncomment this line to log the full payload of all raw events, but be aware that this can create a lot of log output.
     if kind == "ReactionsChanged":
         bot.logger.debug("ReactionsChanged payload: %r", event)
     if kind == "IncomingReaction":

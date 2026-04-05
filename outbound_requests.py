@@ -24,9 +24,10 @@ def to_jsonable(value):
     return repr(value)
 
 
-def post_new_message_webhook(bot, endpoint_url: str, event_type: str, data_to_send) -> None:
+def post_new_message_webhook(bot, account_id: int, endpoint_url: str, event_type: str, data_to_send) -> None:
     payload = {
         "type": event_type,
+        "account_id": account_id,
         "payload": to_jsonable(data_to_send),
     }
     headers = {
