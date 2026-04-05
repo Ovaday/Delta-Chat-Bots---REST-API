@@ -1,7 +1,7 @@
-name: Environment
+name: Local Env
 variables:
   - name: BaseURL
-    value: 192.168.2.130
+    value: localhost
   - name: BasePort
     value: "8000"
   - secret: true

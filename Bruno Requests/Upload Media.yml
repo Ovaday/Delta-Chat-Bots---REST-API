@@ -1,0 +1,101 @@
+info:
+  name: Upload Media
+  type: http
+  seq: 15
+
+http:
+  method: POST
+  url: http://{{BaseURL}}:{{BasePort}}/media
+  body:
+    type: file
+    data:
+      - filePath: C:\Users\johna\Pictures\Screenshots\Screenshot 2026-03-30 004637.png
+        contentType: image/png
+        selected: true
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: Example Unauthorized
+    request:
+      url: http://{{BaseURL}}:{{BasePort}}/health
+      method: GET
+    response:
+      status: 401
+      statusText: Unauthorized
+      headers:
+        - name: server
+          value: BaseHTTP/0.6 Python/3.13.7
+        - name: date
+          value: Sat, 04 Apr 2026 20:45:21 GMT
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "65"
+      body:
+        type: json
+        data: |-
+          {
+            "error": "unauthorized",
+            "detail": "missing or invalid API key"
+          }
+  - name: Example Success
+    request:
+      url: http://{{BaseURL}}:{{BasePort}}/rpc
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "method": "send_msg",
+            "params": [
+              1,
+              10,
+              {
+                "text": "hello from rpc"
+              }
+            ]
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: server
+          value: BaseHTTP/0.6 Python/3.13.7
+        - name: date
+          value: Sat, 04 Apr 2026 20:55:46 GMT
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "83"
+      body:
+        type: json
+        data: |-
+          {
+            "method": "send_msg",
+            "params": [
+              1,
+              10,
+              {
+                "text": "hello from rpc"
+              }
+            ],
+            "result": 64
+          }
+
+docs: |-
+  sendMsg(accountId: number, chatId: number, data: MessageData): Promise<number>
+  Parameters
+  accountId: number
+  chatId: number
+  data: MessageData
+  Returns Promise<number>
+  Defined in generated/client.ts:1593
+
+
+  https://js.jsonrpc.delta.chat/classes/RawClient.html#sendmsg

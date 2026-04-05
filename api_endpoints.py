@@ -74,17 +74,18 @@ def make_handler(bot):
             file_field = form["file"]
             if isinstance(file_field, list):
                 file_field = file_field[0]
+            if not file_field.filename:
+                raise ValueError("uploaded file must include filename")
             if not file_field.file:
                 raise ValueError("invalid uploaded file")
 
-            # Check for custom filename field, otherwise use the file's filename
-            filename_field = form.get("filename")
-            if filename_field and filename_field.value:
-                file_name = self._sanitize_media_name(filename_field.value)
-            elif file_field.filename:
-                file_name = self._sanitize_media_name(file_field.filename)
-            else:
-                raise ValueError("uploaded file must include filename or filename field")
+            file_name = self._sanitize_media_name(file_field.filename)
+            if "filename" in form:
+                filename_field = form["filename"]
+                if isinstance(filename_field, list):
+                    filename_field = filename_field[0]
+                if filename_field.value:
+                    file_name = self._sanitize_media_name(str(filename_field.value))
 
             target_path = self._get_media_file_path(file_name)
             target_path.write_bytes(file_field.file.read())
