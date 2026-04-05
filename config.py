@@ -1,4 +1,5 @@
 import os
+import tempfile
 from pathlib import Path
 
 
@@ -30,3 +31,5 @@ WEBHOOK_AUTH_TOKEN = os.environ.get("WEBHOOK_AUTH_TOKEN")
 API_PORT = os.environ.get("API_PORT","8000")
 API_HOST = os.environ.get("API_HOST","127.0.0.1")
 API_KEY = os.environ.get("API_KEY")
+
+MEDIA_DIR = os.environ.get("MEDIA_DIR", str(Path(tempfile.gettempdir()) / "DeltaChatBotsRestAPI_media"))

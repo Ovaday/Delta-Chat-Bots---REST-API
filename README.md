@@ -50,6 +50,7 @@ API_KEY=supersecretkey
 - `API_HOST`: optional, defaults to `127.0.0.1`
 - `API_PORT`: optional, defaults to `8000`
 - `API_KEY`: required, used for REST API authentication
+- `MEDIA_DIR`: optional, directory path for storing uploaded media files, defaults to system temp directory
 
 ## Installation
 
@@ -222,6 +223,81 @@ If the RPC call succeeds, the API responds with JSON containing:
 - `result`
 
 If the RPC call fails, the API returns `500` with an `rpc_failed` error payload.
+
+## Media endpoints
+
+### `POST /media`
+
+Uploads a file to the server for temporary storage. Files are stored in the directory specified by `MEDIA_DIR`.
+
+The request must be a multipart form with a `file` field. Optionally, you can include a `filename` field to specify a custom name for the uploaded file.
+
+Example:
+
+```bash
+curl --request POST \
+  --url http://127.0.0.1:8000/media \
+  --header "Authorization: Bearer supersecretkey" \
+  --form "file=@/path/to/image.png"
+```
+
+With custom filename:
+
+```bash
+curl --request POST \
+  --url http://127.0.0.1:8000/media \
+  --header "Authorization: Bearer supersecretkey" \
+  --form "file=@/path/to/image.png" \
+  --form "filename=my-custom-name.png"
+```
+
+Response:
+
+```json
+{
+  "status": "created",
+  "name": "image.png"
+}
+```
+
+You can send this file afterwards like that:
+```
+{
+  "method": "send_msg",
+  "params": [
+    1,
+    10,
+    {
+      "text": "Test Image Send",
+      "file": "/tmp/DeltaChatBotsRestAPI_media/filename=my-custom-name.png",
+      "filename": "image.png"
+    }
+  ]
+}
+```
+
+### `DELETE /media?name=<filename>`
+
+Deletes a previously uploaded file from the media directory.
+
+Example:
+
+```bash
+curl --request DELETE \
+  --url "http://127.0.0.1:8000/media?name=image.png" \
+  --header "Authorization: Bearer supersecretkey"
+```
+
+Response:
+
+```json
+{
+  "status": "deleted",
+  "name": "image.png"
+}
+```
+
+If the file doesn't exist, returns `404 Not Found`.
 
 ## Webhook Payloads
 

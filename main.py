@@ -38,7 +38,7 @@ def echo(bot, accid, event):
 def log_raw_event(bot, accid, event):
     kind = getattr(event, "kind", type(event).__name__)
     bot.logger.info("Raw event on account %i: %s", accid, kind)
-    bot.logger.info("Raw event payload: %r", event) # Uncomment this line to log the full payload of all raw events, but be aware that this can create a lot of log output.
+    bot.logger.debug("Raw event payload: %r", event) # Uncomment this line to log the full payload of all raw events, but be aware that this can create a lot of log output.
     if kind == "ReactionsChanged":
         bot.logger.debug("ReactionsChanged payload: %r", event)
     if kind == "IncomingReaction":

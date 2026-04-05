@@ -1,1 +1,2 @@
 deltabot-cli
+legacy-cgi
