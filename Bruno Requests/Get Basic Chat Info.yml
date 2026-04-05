@@ -1,0 +1,121 @@
+info:
+  name: Get Basic Chat Info
+  type: http
+  seq: 12
+
+http:
+  method: POST
+  url: http://{{BaseURL}}:{{BasePort}}/rpc
+  body:
+    type: json
+    data: |-
+      {
+        "method": "get_basic_chat_info",
+        "params": [
+          {{AccountId}},
+          11
+        ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: Example Unauthorized
+    request:
+      url: http://{{BaseURL}}:{{BasePort}}/health
+      method: GET
+    response:
+      status: 401
+      statusText: Unauthorized
+      headers:
+        - name: server
+          value: BaseHTTP/0.6 Python/3.13.7
+        - name: date
+          value: Sat, 04 Apr 2026 20:45:21 GMT
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "65"
+      body:
+        type: json
+        data: |-
+          {
+            "error": "unauthorized",
+            "detail": "missing or invalid API key"
+          }
+  - name: Example Success
+    request:
+      url: http://{{BaseURL}}:{{BasePort}}/rpc
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "method": "get_basic_chat_info",
+            "params": [
+              {{AccountId}},
+              11
+            ]
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: server
+          value: BaseHTTP/0.6 Python/3.11.2
+        - name: date
+          value: Sun, 05 Apr 2026 11:10:55 GMT
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "350"
+      body:
+        type: json
+        data: |-
+          {
+            "method": "get_basic_chat_info",
+            "params": [
+              1,
+              11
+            ],
+            "result": {
+              "archived": false,
+              "chat_type": "OutBroadcast",
+              "color": "#194fe3",
+              "id": 11,
+              "is_contact_request": false,
+              "is_device_chat": false,
+              "is_encrypted": true,
+              "is_muted": false,
+              "is_self_talk": false,
+              "is_unpromoted": false,
+              "name": "Test Broadcast",
+              "pinned": false,
+              "profile_image": null
+            }
+          }
+
+docs: |-
+  createBroadcast(accountId: number, chatName: string): Promise<number>
+  Create a new, outgoing broadcast channel (called "Channel" in the UI).
+
+  Broadcast channels are similar to groups on the sending device, however, recipients get the messages in a read-only chat and will not see who the other members are.
+
+  Called broadcast here rather than channel, because the word "channel" already appears a lot in the code, which would make it hard to grep for it.
+
+  After creation, the chat contains no recipients and is in unpromoted state; see [CommandApi::create_group_chat] for more information on the unpromoted state.
+
+  Returns the created chat's id.
+
+  Parameters
+  accountId: number
+  chatName: string
+  Returns Promise<number>
+  Defined in generated/client.ts:764
+
+  https://js.jsonrpc.delta.chat/classes/RawClient.html#createbroadcast

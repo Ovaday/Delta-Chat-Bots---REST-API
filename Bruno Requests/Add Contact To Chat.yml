@@ -1,0 +1,77 @@
+info:
+  name: Add Contact To Chat
+  type: http
+  seq: 10
+
+http:
+  method: POST
+  url: http://{{BaseURL}}:{{BasePort}}/rpc
+  body:
+    type: json
+    data: |-
+      {
+        "method": "add_contact_to_chat",
+        "params": [
+          {{AccountId}},
+          10,
+          10
+        ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: Example Unauthorized
+    request:
+      url: http://{{BaseURL}}:{{BasePort}}/health
+      method: GET
+    response:
+      status: 401
+      statusText: Unauthorized
+      headers:
+        - name: server
+          value: BaseHTTP/0.6 Python/3.13.7
+        - name: date
+          value: Sat, 04 Apr 2026 20:45:21 GMT
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "65"
+      body:
+        type: json
+        data: |-
+          {
+            "error": "unauthorized",
+            "detail": "missing or invalid API key"
+          }
+
+docs: |-
+  addContactToChat(
+      accountId: number,
+      chatId: number,
+      contactId: number,
+  ): Promise<null>
+  Add a member to a group.
+
+  If the group is already promoted (any message was sent to the group), all group members are informed by a special status message that is sent automatically by this function.
+
+  If the group has group protection enabled, only verified contacts can be added to the group.
+
+  Sends out #DC_EVENT_CHAT_MODIFIED and #DC_EVENT_MSGS_CHANGED if a status message was sent.
+
+  Parameters
+  accountId: number
+  chatId: number
+  contactId: number
+  Returns Promise<null>
+  Defined in generated/client.ts:674
+
+  Note: does not work with Broadcast Channels
+
+
+  https://js.jsonrpc.delta.chat/classes/RawClient.html#addcontacttochat
