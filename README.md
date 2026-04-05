@@ -1,6 +1,6 @@
 # Delta Chat Bots REST API Connector
 
-This project exposes Delta Chat bot RPC functionality through a small local REST API.
+This project exposes [`Delta Chat`](https://delta.chat/) bot RPC functionality through a small local REST API.
 
 It also includes:
 
