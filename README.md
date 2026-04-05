@@ -244,37 +244,73 @@ The repository includes a Bruno (https://www.usebruno.com/) collection in [`Brun
 
 At minimum, set your `API_KEY` in the Bruno environment before sending requests.
 
-## Long-Run as systemd (on Linux) -- not tested yet
+## Long-Run as systemd (on Linux)
+
+### Setup
 Create a service file:
-```
+
+```bash
 sudo nano /etc/systemd/system/DeltaChatBotsRestAPI.service
 ```
-Paste:
-```
+
+Paste the following (replace the paths with your actual project path):
+
+```ini
 [Unit]
-Description=DELTA-CHAT-BOTS---REST-API
+Description=Delta Chat Bots REST API
 After=network.target
 
 [Service]
+Type=simple
 User=your_user
-WorkingDirectory=/path/to/DELTA-CHAT-BOTS---REST-API
-ExecStart=/path/to/project/venv/bin/python main.py serve
+WorkingDirectory=/home/your_user/projects/Delta-Chat-Bots---REST-API
+Environment="PATH=/home/your_user/projects/Delta-Chat-Bots---REST-API/.venv/bin:/usr/local/bin:/usr/bin:/bin"
+ExecStart=/home/your_user/projects/Delta-Chat-Bots---REST-API/.venv/bin/python main.py serve
 Restart=always
+RestartSec=10
 
 [Install]
 WantedBy=multi-user.target
 ```
-Then:
-```
-sudo systemctl daemon-reexec
+
+Key points:
+
+- Set `User` to the user that should run the service (not root)
+- Set `WorkingDirectory` to your project path
+- Set `Environment=PATH=...` to include the venv's bin directory so all previously installed dependencies are found
+- `Type=simple` is appropriate for long-running services
+- `RestartSec=10` waits 10 seconds before restarting on failure
+
+Enable and start the service:
+
+```bash
 sudo systemctl daemon-reload
 sudo systemctl enable DeltaChatBotsRestAPI
 sudo systemctl start DeltaChatBotsRestAPI
 ```
 
-Check logs:
+### Check the status:
+
+```bash
+sudo systemctl status DeltaChatBotsRestAPI
 ```
-journalctl -u mybot -f
+
+View logs in real time:
+
+```bash
+sudo journalctl -u DeltaChatBotsRestAPI -f
+```
+
+View recent logs:
+
+```bash
+sudo journalctl -u DeltaChatBotsRestAPI -n 50
+```
+
+Stop the service:
+
+```bash
+sudo systemctl stop DeltaChatBotsRestAPI
 ```
 
 ## Troubleshooting
