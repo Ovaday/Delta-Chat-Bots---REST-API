@@ -1,7 +1,7 @@
 info:
   name: Add Contact To Chat
   type: http
-  seq: 10
+  seq: 11
 
 http:
   method: POST

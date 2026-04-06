@@ -1,7 +1,7 @@
 info:
   name: Get Chat Securejoin Qr Code
   type: http
-  seq: 13
+  seq: 14
 
 http:
   method: POST

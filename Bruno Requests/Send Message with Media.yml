@@ -1,7 +1,7 @@
 info:
-  name: Set Bot Name
+  name: Send Message with Media
   type: http
-  seq: 15
+  seq: 2
 
 http:
   method: POST
@@ -10,11 +10,15 @@ http:
     type: json
     data: |-
       {
-        "method": "set_config",
+        "method": "send_msg",
         "params": [
           {{AccountId}},
-          "displayname",
-          "Test Bot Change"
+          10,
+          {
+            "text": "hello from rpc",
+            "file": "image.png",
+            "filename": "image.png"
+          }
         ]
       }
   auth: inherit
@@ -57,11 +61,15 @@ examples:
         type: json
         data: |-
           {
-            "method": "set_config",
+            "method": "send_msg",
             "params": [
               {{AccountId}},
-              "displayname",
-              "Test Bot Change"
+              10,
+              {
+                "text": "hello from rpc",
+                "file": "image.png",
+                "filename": "image.png"
+              }
             ]
           }
     response:
@@ -71,40 +79,36 @@ examples:
         - name: server
           value: BaseHTTP/0.6 Python/3.11.2
         - name: date
-          value: Sun, 05 Apr 2026 11:31:57 GMT
+          value: Mon, 06 Apr 2026 22:27:17 GMT
         - name: content-type
           value: application/json; charset=utf-8
         - name: content-length
-          value: "89"
+          value: "160"
       body:
         type: json
         data: |-
           {
-            "method": "set_config",
+            "method": "send_msg",
             "params": [
               1,
-              "displayname",
-              "Test Bot Change"
+              10,
+              {
+                "text": "hello from rpc",
+                "file": "image.png",
+                "filename": "image.png"
+              }
             ],
-            "result": null
+            "result": 51
           }
 
 docs: |-
-  createBroadcast(accountId: number, chatName: string): Promise<number>
-  Create a new, outgoing broadcast channel (called "Channel" in the UI).
-
-  Broadcast channels are similar to groups on the sending device, however, recipients get the messages in a read-only chat and will not see who the other members are.
-
-  Called broadcast here rather than channel, because the word "channel" already appears a lot in the code, which would make it hard to grep for it.
-
-  After creation, the chat contains no recipients and is in unpromoted state; see [CommandApi::create_group_chat] for more information on the unpromoted state.
-
-  Returns the created chat's id.
-
+  sendMsg(accountId: number, chatId: number, data: MessageData): Promise<number>
   Parameters
   accountId: number
-  chatName: string
+  chatId: number
+  data: MessageData
   Returns Promise<number>
-  Defined in generated/client.ts:764
+  Defined in generated/client.ts:1593
 
-  https://js.jsonrpc.delta.chat/classes/RawClient.html#createbroadcast
+
+  https://js.jsonrpc.delta.chat/classes/RawClient.html#sendmsg

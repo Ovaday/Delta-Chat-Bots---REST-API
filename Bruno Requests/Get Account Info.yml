@@ -1,7 +1,7 @@
 info:
   name: Get Account Info
   type: http
-  seq: 7
+  seq: 8
 
 http:
   method: POST

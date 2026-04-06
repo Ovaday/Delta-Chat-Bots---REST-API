@@ -1,7 +1,7 @@
 info:
   name: Get Basic Chat Info
   type: http
-  seq: 12
+  seq: 13
 
 http:
   method: POST

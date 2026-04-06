@@ -1,7 +1,7 @@
 info:
   name: Get All Accounts
   type: http
-  seq: 5
+  seq: 6
 
 http:
   method: POST
