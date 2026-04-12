@@ -1,7 +1,7 @@
 info:
-  name: Set Chat Profile Image
+  name: Set Bot Profile Image
   type: http
-  seq: 18
+  seq: 17
 
 http:
   method: POST
@@ -10,12 +10,11 @@ http:
     type: json
     data: |-
       {
-        "method": "set_chat_profile_image",
+        "method": "set_config",
         "params": [
           {{AccountId}},
-          10,
-          "image.png"
-          
+          "selfavatar",
+          "/tmp/DeltaChatBotsRestAPI_media/logo1.png"
         ]
       }
   auth: inherit
@@ -58,12 +57,11 @@ examples:
         type: json
         data: |-
           {
-            "method": "set_chat_profile_image",
+            "method": "set_config",
             "params": [
               {{AccountId}},
-              11,
-              "image.jpg"
-              
+              "displayname",
+              "Test Bot Change"
             ]
           }
     response:
@@ -73,43 +71,40 @@ examples:
         - name: server
           value: BaseHTTP/0.6 Python/3.11.2
         - name: date
-          value: Mon, 06 Apr 2026 22:30:33 GMT
+          value: Sun, 05 Apr 2026 11:31:57 GMT
         - name: content-type
           value: application/json; charset=utf-8
         - name: content-length
-          value: "115"
+          value: "89"
       body:
         type: json
         data: |-
           {
-            "method": "set_chat_profile_image",
+            "method": "set_config",
             "params": [
-              2,
-              11,
-              "image.png"
+              1,
+              "displayname",
+              "Test Bot Change"
             ],
             "result": null
           }
 
 docs: |-
-  setChatProfileImage(
-      accountId: number,
-      chatId: number,
-      imagePath: string | null,
-  ): Promise<null>
-  Set group profile image.
+  createBroadcast(accountId: number, chatName: string): Promise<number>
+  Create a new, outgoing broadcast channel (called "Channel" in the UI).
 
-  If the group is already promoted (any message was sent to the group), or if this is a brodacast channel, all members are informed by a special status message that is sent automatically by this function.
+  Broadcast channels are similar to groups on the sending device, however, recipients get the messages in a read-only chat and will not see who the other members are.
 
-  Sends out #DC_EVENT_CHAT_MODIFIED and #DC_EVENT_MSGS_CHANGED if a status message was sent.
+  Called broadcast here rather than channel, because the word "channel" already appears a lot in the code, which would make it hard to grep for it.
 
-  To find out the profile image of a chat, use dc_chat_get_profile_image()
+  After creation, the chat contains no recipients and is in unpromoted state; see [CommandApi::create_group_chat] for more information on the unpromoted state.
+
+  Returns the created chat's id.
 
   Parameters
   accountId: number
-  chatId: number
-  imagePath: string | null
-  Returns Promise<null>
-  Defined in generated/client.ts:822
+  chatName: string
+  Returns Promise<number>
+  Defined in generated/client.ts:764
 
-  https://js.jsonrpc.delta.chat/classes/RawClient.html#setchatprofileimage
+  https://js.jsonrpc.delta.chat/classes/RawClient.html#createbroadcast

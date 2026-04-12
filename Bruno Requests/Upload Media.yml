@@ -1,7 +1,7 @@
 info:
   name: Upload Media
   type: http
-  seq: 15
+  seq: 19
 
 http:
   method: POST
@@ -9,7 +9,7 @@ http:
   body:
     type: file
     data:
-      - filePath: C:\Users\johna\Pictures\Screenshots\Screenshot 2026-03-30 004637.png
+      - filePath: /tmp/DeltaChatBotsRestAPI_media/image.png
         contentType: image/png
         selected: true
   auth: inherit

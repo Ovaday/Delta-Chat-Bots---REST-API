@@ -1,7 +1,7 @@
 info:
   name: Send Message with Media
   type: http
-  seq: 2
+  seq: 3
 
 http:
   method: POST

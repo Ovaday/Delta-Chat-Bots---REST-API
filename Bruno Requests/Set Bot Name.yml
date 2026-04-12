@@ -1,7 +1,7 @@
 info:
   name: Set Bot Name
   type: http
-  seq: 15
+  seq: 16
 
 http:
   method: POST
