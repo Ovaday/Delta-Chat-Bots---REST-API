@@ -8,3 +8,7 @@ variables:
     name: APIKey
   - name: AccountId
     value: "1"
+  - secret: true
+    name: BackupExportPath
+  - secret: true
+    name: BackupPassphrase
